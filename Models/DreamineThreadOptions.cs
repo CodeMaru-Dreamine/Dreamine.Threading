@@ -61,6 +61,11 @@ public sealed class DreamineThreadOptions
     public bool YieldWhenIntervalIsZero { get; set; } = true;
 
     /// <summary>
+    /// Gets or sets how long stop operations wait for the worker thread to exit.
+    /// </summary>
+    public TimeSpan StopTimeout { get; set; } = TimeSpan.FromSeconds(2);
+
+    /// <summary>
     /// Creates a normalized copy of the current options.
     /// </summary>
     /// <returns>The normalized options.</returns>
@@ -78,7 +83,8 @@ public sealed class DreamineThreadOptions
             AutoStart = AutoStart,
             UseHighPrecisionTimer = UseHighPrecisionTimer,
             YieldWhenIntervalIsZero = YieldWhenIntervalIsZero,
-            UseAdaptiveCpuDelay = UseAdaptiveCpuDelay
+            UseAdaptiveCpuDelay = UseAdaptiveCpuDelay,
+            StopTimeout = StopTimeout <= TimeSpan.Zero ? TimeSpan.FromSeconds(2) : StopTimeout
         };
     }
 }

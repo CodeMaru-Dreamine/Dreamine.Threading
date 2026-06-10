@@ -23,12 +23,31 @@ public static class DreamineThreadingRegistration
         var options = new DreamineThreadingOptions();
         configure?.Invoke(options);
 
+        ICpuUsageProvider? cpuUsageProvider = DMContainer.IsRegistered<ICpuUsageProvider>()
+            ? DMContainer.Resolve<ICpuUsageProvider>()
+            : null;
+
+        Register(options, cpuUsageProvider);
+    }
+
+    /// <summary>
+    /// Registers Dreamine threading core services.
+    /// </summary>
+    /// <param name="options">The threading options.</param>
+    /// <param name="cpuUsageProvider">The optional CPU usage provider for adaptive cycle policy.</param>
+    public static void Register(
+        DreamineThreadingOptions options,
+        ICpuUsageProvider? cpuUsageProvider = null)
+    {
+        ArgumentNullException.ThrowIfNull(options);
+
         DMContainer.RegisterSingleton<IThreadCoreAllocator>(
             new AutoCoreAllocator());
 
         DMContainer.RegisterSingleton<IThreadCyclePolicy>(
-            new AdaptiveCpuCyclePolicy(
-                DMContainer.Resolve<ICpuUsageProvider>()));
+            options.UseAdaptiveCpuPolicy && cpuUsageProvider is not null
+                ? new AdaptiveCpuCyclePolicy(cpuUsageProvider)
+                : new FixedIntervalCyclePolicy());
 
         DMContainer.RegisterSingleton<IDreamineThreadScheduler>(
             new DreamineThreadScheduler());
@@ -38,8 +57,15 @@ public static class DreamineThreadingRegistration
                 DMContainer.Resolve<IThreadCoreAllocator>(),
                 DMContainer.Resolve<IThreadCyclePolicy>(),
                 DMContainer.Resolve<IDreamineThreadScheduler>(),
-                DMContainer.Resolve<IThreadAffinityService>(),
-                DMContainer.Resolve<ITimerResolutionService>(),
-                DMContainer.Resolve<IDreamineLogger>()));
+                ResolveOptional<IThreadAffinityService>(),
+                ResolveOptional<ITimerResolutionService>(),
+                ResolveOptional<IDreamineLogger>()));
+    }
+
+    private static T? ResolveOptional<T>() where T : class
+    {
+        return DMContainer.IsRegistered<T>()
+            ? DMContainer.Resolve<T>()
+            : null;
     }
 }

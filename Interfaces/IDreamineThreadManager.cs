@@ -32,6 +32,13 @@ public interface IDreamineThreadManager : IDisposable
     bool Stop(string threadName);
 
     /// <summary>
+    /// Stops the specified worker thread without blocking the caller thread during the join wait.
+    /// </summary>
+    /// <param name="threadName">The worker thread name.</param>
+    /// <returns>True if the worker thread was found and stopped; otherwise false.</returns>
+    ValueTask<bool> StopAsync(string threadName);
+
+    /// <summary>
     /// Pauses the specified worker thread.
     /// </summary>
     /// <param name="threadName">The worker thread name.</param>
@@ -54,6 +61,12 @@ public interface IDreamineThreadManager : IDisposable
     /// Stops all worker threads.
     /// </summary>
     void StopAll();
+
+    /// <summary>
+    /// Stops all worker threads without blocking the caller thread during join waits.
+    /// </summary>
+    /// <returns>The asynchronous stop operation.</returns>
+    ValueTask StopAllAsync();
 
     /// <summary>
     /// Pauses all worker threads.

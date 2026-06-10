@@ -134,6 +134,15 @@ public sealed class DreamineThreadManager : IDreamineThreadManager
     }
 
     /// <inheritdoc />
+    public async ValueTask StopAllAsync()
+    {
+        foreach (var thread in GetThreads())
+        {
+            await thread.StopAsync().ConfigureAwait(false);
+        }
+    }
+
+    /// <inheritdoc />
     public bool Start(string threadName)
     {
         if (!TryGetThread(threadName, out var thread) || thread is null)
@@ -154,6 +163,18 @@ public sealed class DreamineThreadManager : IDreamineThreadManager
         }
 
         thread.Stop();
+        return true;
+    }
+
+    /// <inheritdoc />
+    public async ValueTask<bool> StopAsync(string threadName)
+    {
+        if (!TryGetThread(threadName, out var thread) || thread is null)
+        {
+            return false;
+        }
+
+        await thread.StopAsync().ConfigureAwait(false);
         return true;
     }
 

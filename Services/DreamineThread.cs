@@ -184,6 +184,12 @@ public sealed class DreamineThread : IDreamineThread
     /// <inheritdoc />
     public void Stop()
     {
+        StopAsync().AsTask().GetAwaiter().GetResult();
+    }
+
+    /// <inheritdoc />
+    public async ValueTask StopAsync()
+    {
         Thread? threadToJoin;
 
         lock (_syncRoot)
@@ -202,7 +208,9 @@ public sealed class DreamineThread : IDreamineThread
 
         if (threadToJoin is not null && threadToJoin.IsAlive)
         {
-            threadToJoin.Join(TimeSpan.FromSeconds(2));
+            await Task.Run(
+                () => threadToJoin.Join(Options.StopTimeout))
+                .ConfigureAwait(false);
         }
 
         lock (_syncRoot)
@@ -343,7 +351,10 @@ public sealed class DreamineThread : IDreamineThread
 
             try
             {
-                job.ExecuteAsync(cancellationToken).AsTask().GetAwaiter().GetResult();
+                // Jobs run on a dedicated worker thread. Blocking here is
+                // intentional so jobs preserve registration order and the cycle
+                // policy observes completed work before calculating the next delay.
+                job.ExecuteAsync(cancellationToken).GetAwaiter().GetResult();
             }
             catch (OperationCanceledException)
             {

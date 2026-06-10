@@ -59,6 +59,12 @@ public interface IDreamineThread : IDisposable
     void Stop();
 
     /// <summary>
+    /// Stops the worker thread without blocking the caller thread during the join wait.
+    /// </summary>
+    /// <returns>The asynchronous stop operation.</returns>
+    ValueTask StopAsync();
+
+    /// <summary>
     /// Gets a snapshot of the worker thread state.
     /// </summary>
     /// <returns>The thread state snapshot.</returns>
