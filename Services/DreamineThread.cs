@@ -34,8 +34,14 @@ public sealed class DreamineThread : IDreamineThread
     /// <inheritdoc />
     public DreamineThreadCoreAssignment CoreAssignment { get; }
 
+    private volatile DreamineThreadStatus _status = DreamineThreadStatus.Created;
+
     /// <inheritdoc />
-    public DreamineThreadStatus Status { get; private set; } = DreamineThreadStatus.Created;
+    public DreamineThreadStatus Status
+    {
+        get => _status;
+        private set => _status = value;
+    }
 
     /// <inheritdoc />
     public int JobCount
