@@ -188,6 +188,7 @@ public sealed class DreamineThread : IDreamineThread
     }
 
     /// <inheritdoc />
+    [Obsolete("Stop() blocks the calling thread and risks deadlock on a SynchronizationContext. Use StopAsync() instead. / 호출 스레드를 블로킹하며 SynchronizationContext 환경에서 데드락 위험이 있습니다. StopAsync()를 사용하세요.")]
     public void Stop()
     {
         StopAsync().AsTask().GetAwaiter().GetResult();
