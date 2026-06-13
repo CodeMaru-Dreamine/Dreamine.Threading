@@ -262,7 +262,7 @@ public sealed class DreamineThread : IDreamineThread
             return;
         }
 
-        Stop();
+        StopAsync().AsTask().GetAwaiter().GetResult();
 
         _pauseEvent.Dispose();
         _disposed = true;
