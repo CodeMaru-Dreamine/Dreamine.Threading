@@ -519,6 +519,7 @@ public sealed class DreamineThread : IDreamineThread
     public async ValueTask StopAsync()
     {
         Thread? threadToJoin;
+        CancellationTokenSource? cancellationSource;
 
         lock (_syncRoot)
         {
@@ -530,14 +531,18 @@ public sealed class DreamineThread : IDreamineThread
             Status = DreamineThreadStatus.Stopping;
             _pauseEvent.Set();
 
-            _cancellationTokenSource?.Cancel();
+            cancellationSource = _cancellationTokenSource;
             threadToJoin = _thread;
         }
+
+        if (cancellationSource is not null)
+            await cancellationSource.CancelAsync().ConfigureAwait(false);
 
         if (threadToJoin is not null && threadToJoin.IsAlive)
         {
             await Task.Run(
-                () => threadToJoin.Join(Options.StopTimeout))
+                () => threadToJoin.Join(Options.StopTimeout),
+                CancellationToken.None)
                 .ConfigureAwait(false);
         }
 
