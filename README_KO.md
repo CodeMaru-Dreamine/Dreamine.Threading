@@ -1,5 +1,11 @@
 # Dreamine.Threading
 
+[![CI](https://github.com/CodeMaru-Dreamine/Dreamine.Threading/actions/workflows/ci.yml/badge.svg)](https://github.com/CodeMaru-Dreamine/Dreamine.Threading/actions/workflows/ci.yml) [![품질 게이트](https://sonarcloud.io/api/project_badges/measure?project=CodeMaru-Dreamine_Dreamine.Threading&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=CodeMaru-Dreamine_Dreamine.Threading) [![보안](https://sonarcloud.io/api/project_badges/measure?project=CodeMaru-Dreamine_Dreamine.Threading&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=CodeMaru-Dreamine_Dreamine.Threading) [![커버리지](https://sonarcloud.io/api/project_badges/measure?project=CodeMaru-Dreamine_Dreamine.Threading&metric=coverage)](https://sonarcloud.io/summary/new_code?id=CodeMaru-Dreamine_Dreamine.Threading)
+
+[![라이선스](https://img.shields.io/github/license/CodeMaru-Dreamine/Dreamine.Threading)](LICENSE) ![.NET](https://img.shields.io/badge/.NET-8-512BD4) [![NuGet](https://img.shields.io/nuget/v/Dreamine.Threading)](https://www.nuget.org/packages/Dreamine.Threading) [![다운로드](https://img.shields.io/nuget/dt/Dreamine.Threading)](https://www.nuget.org/packages/Dreamine.Threading)
+
+[![문서](https://img.shields.io/badge/문서-dreamine.kr-2496ED)](https://dreamine.kr) [![가이드](https://img.shields.io/badge/가이드-dreamine.kr-2496ED)](https://dreamine.kr) [![실습장](https://img.shields.io/badge/실습장-dreamine.kr-6F42C1)](https://dreamine.kr) [![도서](https://img.shields.io/badge/도서-실전_MVVM_아키텍처-111111)](https://dreamine.kr)
+
 **Dreamine.Threading**은 Dreamine 애플리케이션을 위한 핵심 스레딩 추상화 계층입니다.
 
 이 패키지는 Dreamine 기반 애플리케이션에서 사용할 계약, 모델, 스케줄링 정책, Worker Thread 개념, Polling Job 구조, CPU 기반 Cycle Policy, Thread Manager 구조를 정의합니다.
