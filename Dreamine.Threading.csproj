@@ -22,7 +22,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Logging\Dreamine.Logging.csproj" />
+	  <PackageReference Include="Dreamine.Logging" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Remove="tests\**\*.cs" />
+	  <None Remove="tests\**\*" />
 	</ItemGroup>
 
 	<ItemGroup>

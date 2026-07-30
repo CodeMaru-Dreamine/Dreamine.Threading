@@ -1,5 +1,11 @@
 # Dreamine.Threading
 
+[![CI](https://github.com/CodeMaru-Dreamine/Dreamine.Threading/actions/workflows/ci.yml/badge.svg)](https://github.com/CodeMaru-Dreamine/Dreamine.Threading/actions/workflows/ci.yml) [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=CodeMaru-Dreamine_Dreamine.Threading&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=CodeMaru-Dreamine_Dreamine.Threading) [![Security](https://sonarcloud.io/api/project_badges/measure?project=CodeMaru-Dreamine_Dreamine.Threading&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=CodeMaru-Dreamine_Dreamine.Threading) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=CodeMaru-Dreamine_Dreamine.Threading&metric=coverage)](https://sonarcloud.io/summary/new_code?id=CodeMaru-Dreamine_Dreamine.Threading)
+
+[![License](https://img.shields.io/github/license/CodeMaru-Dreamine/Dreamine.Threading)](LICENSE) ![.NET](https://img.shields.io/badge/.NET-8-512BD4) [![NuGet](https://img.shields.io/nuget/v/Dreamine.Threading)](https://www.nuget.org/packages/Dreamine.Threading) [![Downloads](https://img.shields.io/nuget/dt/Dreamine.Threading)](https://www.nuget.org/packages/Dreamine.Threading)
+
+[![Docs](https://img.shields.io/badge/Docs-dreamine.kr-2496ED)](https://dreamine.kr) [![Guide](https://img.shields.io/badge/Guide-dreamine.kr-2496ED)](https://dreamine.kr) [![Playground](https://img.shields.io/badge/Playground-dreamine.kr-6F42C1)](https://dreamine.kr) [![Book](https://img.shields.io/badge/Book-Practical_MVVM_Architecture-111111)](https://dreamine.kr)
+
 **Dreamine.Threading** provides the core threading abstraction layer for Dreamine applications.
 
 It defines contracts, models, scheduling policies, worker-thread concepts, polling-job structure, CPU-aware cycle policies, and thread manager infrastructure used by Dreamine-based applications.
