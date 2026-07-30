@@ -41,6 +41,14 @@ jobs:
           $basic = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$($env:SONAR_TOKEN):"))
           try {
             Invoke-RestMethod -Method Post -Uri 'https://sonarcloud.io/api/autoscan/activation' -Headers @{ Authorization = "Basic $basic" } -ContentType 'application/x-www-form-urlencoded' -Body @{ projectKey = $env:SONAR_PROJECT_KEY; enable = 'false' } | Out-Null
+            $gates = Invoke-RestMethod -Method Get -Uri "https://sonarcloud.io/api/qualitygates/list?organization=$($env:SONAR_ORGANIZATION)" -Headers $headers
+            $gateId = $gates.default
+            if ($null -eq $gateId) {
+              $gateId = ($gates.qualitygates | Where-Object name -eq 'Sonar way' | Select-Object -First 1).id
+            }
+            if ($null -ne $gateId) {
+              Invoke-RestMethod -Method Post -Uri 'https://sonarcloud.io/api/qualitygates/select' -Headers $headers -ContentType 'application/x-www-form-urlencoded' -Body @{ organization = $env:SONAR_ORGANIZATION; projectKey = $env:SONAR_PROJECT_KEY; gateId = $gateId } | Out-Null
+            }
             Invoke-RestMethod -Method Post -Uri 'https://sonarcloud.io/api/new_code_periods/set' -Headers $headers -ContentType 'application/x-www-form-urlencoded' -Body @{ project = $env:SONAR_PROJECT_KEY; type = 'NUMBER_OF_DAYS'; value = '30' } | Out-Null
           } catch { Write-Warning $_ }
       - name: Restore
